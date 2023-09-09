@@ -11,10 +11,10 @@ const Home: NextPage = (props) => {
   return (
     <div className={styles.App}>
       <Head>
-        <title>Wallet-Adapter Example</title>
+        <title>Prize Pool Admin Panel</title>
         <meta
           name="description"
-          content="Wallet-Adapter Example"
+          content="Prize Pool Admin Panel"
         />
       </Head>
       <WalletContextProvider>
@@ -22,7 +22,7 @@ const Home: NextPage = (props) => {
          
         <div className="container mt-5">
           <div className='row'>
-            <div className='col-12'>
+            <div className='col-12 mb-3'>
             <ChangeGameForm></ChangeGameForm>
             </div>
             <div className='col-12'>
