@@ -51,8 +51,8 @@ export const ChangeGameForm:  FC = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className='row offset-4'>
-        <div className='col-6'>
+      <div className='row offset-md-4'>
+        <div className='col-12 col-md-6'>
           <div className='row'>
           <div className="col-12 mb-3 text-center 0">
             <label htmlFor="creatorShare" className="form-label text-white">Creator Share (Required)</label>

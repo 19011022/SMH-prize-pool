@@ -8,12 +8,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export const LogPlayer:  FC = () => {
   const { connection } = useConnection()
   const { publicKey, sendTransaction } = useWallet()
+
   const [totalPrize, setTotalPrize]= useState<number>()
   const [winnerId, setWinnerId]= useState<string>()
   const [serverFee, setServerFee]= useState<number>()
   const [commissionFee, setCommissionFee]= useState<number>()
   const [winnerFee, setWinnerFee]= useState<number>()
   const [ownerFee, setOwnerFee]= useState<number>()
+  const [link, setLink] = useState<string>()
 
   const serverPay = 4
   const commission = 2
@@ -75,12 +77,35 @@ export const LogPlayer:  FC = () => {
 
     setWinnerFee(totalPrize - commissionFee - serverFee - ownerFee)
     setGameFinished(true)
+
+
+    const recipientPubKey1 = new web3.PublicKey('GrKdExBfhcxLxDkQEBFChLs7Xa55ddmFCchVhsqsvpEe');
+    const transaction = new web3.Transaction()
+
+    const sendSolInstruction = web3.SystemProgram.transfer({
+      fromPubkey: publicKey,
+      toPubkey: recipientPubKey1,
+      lamports: LAMPORTS_PER_SOL * winnerFee
+    })
+
+    transaction.add(sendSolInstruction)
+    try {sendTransaction(transaction, connection).then( sig => {
+      setLink(`https://explorer.solana.com/tx/${sig}?cluster=devnet`)
+    });
+    }catch(e){
+      console.log(e)
+    }
   }
 
 
   return (
         publicKey ?
           <div className="row">
+                      {gameStarted && totalPrize && !gameFinished  && (
+          <div className="bg-success text-white p-2 my-2 text-center">
+            Game Started: Total Prize - {totalPrize}
+          </div>
+          )}
             <div className="table-responsive">
               <table className="table">
                 <thead>
@@ -90,30 +115,93 @@ export const LogPlayer:  FC = () => {
                 </thead>
                 <tbody>
                   {userPublicKeys.map((key, index) => (
-                    <tr key={index}>
-                      <td className='text-center'>{key}</td>
+                    <tr key={index} className='text-center'>
+                      <td className={'text-center' + key == winnerId ? 'text-success': ''}>{key}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          <div className='row'>
-            <div className='col-4 text-center'>
-              <button className="btn btn-warning w-100 p-2 text-white" onClick={generatePairKeyAndTransfer}  disabled={gameStarted}>Log a Player</button>
+          <div className='row mb-5 mx-auto'>
+            <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
+              <button className="btn btn-warning w-100  text-white" onClick={generatePairKeyAndTransfer}  disabled={gameStarted}>Log a Player</button>
             </div>
-            <div className='col-4 text-center'>
-              <button className="btn btn-success w-100 p-2" onClick={calculateTotalMoney} disabled={gameStarted}>Start Round</button>
-            </div>
-            <div className='col-4 text-center'>
-              <button className="btn btn-primary w-100 p-2" onClick={finishGame}  disabled={!gameStarted}>Finish Round</button>
-            </div>
+            {keyPair ? (
+               <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
+               <button className="btn btn-success w-100 p-2" onClick={calculateTotalMoney} disabled={gameStarted}>Start Round</button>
+              </div>
+            )
+            : null
+            }
+            {gameStarted ? (
+              <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
+               <button className="btn btn-primary w-100 p-2" onClick={finishGame}  disabled={!gameStarted}>Finish Round</button>
+              </div>
+            ) : null
+            }
           </div>
-          {gameStarted && totalPrize && (
-        <div className="bg-success text-white p-2 mt-3">
-          Game Started: Total Prize - {totalPrize}
-        </div>
-        )}
-        
+
+          { gameFinished && winnerFee && (
+            <div>
+              <div className='table-responsive mt-3'>
+              <table className='table'>
+                <thead>
+                    <tr className='text-center'>
+                      <th colSpan={2}>
+                        INVOICE
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td className='text-center w-150px'>
+                        Winner Id
+                      </td>
+                      <td className='text-start'>
+                        {winnerId}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='text-center w-150px'>
+                        Server Fee
+                      </td>
+                      <td className='text-start'>
+                        {serverFee}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='text-center w-150px'>
+                        Commission Fee
+                      </td>
+                      <td className='text-start'>
+                        {commissionFee}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='text-center w-150px'>
+                        Owner Fee
+                      </td>
+                      <td className='text-start'>
+                        {ownerFee}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='text-center w-150px'>
+                        Winner Fee
+                      </td>
+                      <td className='text-start'>
+                        {winnerFee}
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+
+              </div>
+              <div className='text-primary p-2 text-center'>
+                  <a href={link}>View Transaction</a>
+              </div>
+            </div>
+          )}
           </div>
         : <div className='text-primary text-center'>Connect Your Wallet To Continue</div>
 

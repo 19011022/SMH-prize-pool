@@ -20,7 +20,7 @@ const Home: NextPage = (props) => {
       <WalletContextProvider>
         <AppBar />
          
-        <div className="container mt-5">
+        <div className="container mt-5 mx-auto">
           <div className='row'>
             <div className='col-12 mb-3'>
             <ChangeGameForm></ChangeGameForm>
