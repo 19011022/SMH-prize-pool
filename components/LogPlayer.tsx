@@ -102,15 +102,15 @@ export const LogPlayer:  FC = () => {
         publicKey ?
           <div className="row">
                       {gameStarted && totalPrize && !gameFinished  && (
-          <div className="bg-success text-white p-2 my-2 text-center">
+          <div className="bg-success text-white p-2 my-2 text-center fw-bolder">
             Game Started: Total Prize - {totalPrize}
           </div>
           )}
-            <div className="table-responsive">
+            <div className="table-responsive fw-bolder">
               <table className="table">
                 <thead>
-                  <tr className='text-center'>
-                    <th>Public Keys</th>
+                  <tr className='text-center table-dark text-white'>
+                    <th>Current Players</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,18 +124,18 @@ export const LogPlayer:  FC = () => {
             </div>
           <div className='row mb-5 mx-auto'>
             <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
-              <button className="btn btn-warning w-100  text-white" onClick={generatePairKeyAndTransfer}  disabled={gameStarted}>Log a Player</button>
+              <button className="btn btn-dark w-50 p-2 text-white fw-bolder" onClick={generatePairKeyAndTransfer}  disabled={gameStarted}>Join A Player</button>
             </div>
             {keyPair ? (
                <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
-               <button className="btn btn-success w-100 p-2" onClick={calculateTotalMoney} disabled={gameStarted}>Start Round</button>
+               <button className="btn btn-dark w-50 p-2 text-white fw-bolder" onClick={calculateTotalMoney} disabled={gameStarted}>Start Game Round</button>
               </div>
             )
             : null
             }
             {gameStarted ? (
               <div className='col-12 col-md-4 mb-2 mb-md-0 text-center'>
-               <button className="btn btn-primary w-100 p-2" onClick={finishGame}  disabled={!gameStarted}>Finish Round</button>
+               <button className="btn btn-dark w-50 p-2 text-white fw-bolder" onClick={finishGame}  disabled={!gameStarted}>Finish Game Round</button>
               </div>
             ) : null
             }
@@ -143,10 +143,10 @@ export const LogPlayer:  FC = () => {
 
           { gameFinished && winnerFee && (
             <div>
-              <div className='table-responsive mt-3'>
+              <div className='table-responsive fw-bolder mt-3'>
               <table className='table'>
                 <thead>
-                    <tr className='text-center'>
+                    <tr className='text-center table-dark text-white'>
                       <th colSpan={2}>
                         INVOICE
                       </th>
@@ -154,42 +154,42 @@ export const LogPlayer:  FC = () => {
                   </thead>
                   <tbody>
                   <tr>
-                      <td className='text-center w-150px'>
+                      <td className='text-start w-175px'>
                         Winner Id
                       </td>
-                      <td className='text-start'>
+                      <td className='text-end'>
                         {winnerId}
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center w-150px'>
+                      <td className='text-start w-175px'>
                         Server Fee
                       </td>
-                      <td className='text-start'>
+                      <td className='text-end'>
                         {serverFee}
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center w-150px'>
+                      <td className='text-start w-175px'>
                         Commission Fee
                       </td>
-                      <td className='text-start'>
+                      <td className='text-end'>
                         {commissionFee}
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center w-150px'>
+                      <td className='text-start w-175px'>
                         Owner Fee
                       </td>
-                      <td className='text-start'>
+                      <td className='text-end'>
                         {ownerFee}
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center w-150px'>
+                      <td className='text-start w-175px'>
                         Winner Fee
                       </td>
-                      <td className='text-start'>
+                      <td className='text-end'>
                         {winnerFee}
                       </td>
                     </tr>
@@ -197,13 +197,13 @@ export const LogPlayer:  FC = () => {
               </table>
 
               </div>
-              <div className='text-primary p-2 text-center'>
-                  <a href={link}>View Transaction</a>
+              <div className='text-primary text-center mb-3'>
+                  <a className="badge bg-primary text-white p-3" href={link}>View Transaction</a>
               </div>
             </div>
           )}
           </div>
-        : <div className='text-primary text-center'>Connect Your Wallet To Continue</div>
+        : <div className='text-center'><span className='text-white'>Connect Your Wallet To Continue</span></div>
 
   );
 }

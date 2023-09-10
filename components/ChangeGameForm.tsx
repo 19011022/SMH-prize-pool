@@ -52,13 +52,13 @@ export const ChangeGameForm:  FC = () => {
   return (
     <form onSubmit={handleFormSubmit}>
       <div className='row offset-md-4'>
-        <div className='col-12 col-md-6'>
+        <div className='col-10 col-md-6 offset-1'>
           <div className='row'>
-          <div className="col-12 mb-3 text-center 0">
-            <label htmlFor="creatorShare" className="form-label text-white">Creator Share (Required)</label>
+           <div className="input-group mb-3 ">
+            <span className="input-group-text bg-secondary text-white border-0 fw-bolder">Creator Share<span className='text-danger'>*</span></span>
             <input
               type="number"
-              className="form-control"
+              className="form-control bg-dark text-white border-0 fw-bolder"
               id="creatorShare"
               name="creatorShare"
               value={formValues.creatorShare}
@@ -66,11 +66,13 @@ export const ChangeGameForm:  FC = () => {
               required
             />
           </div>
-      <div className="col-12 mb-3 text-center">
-        <label htmlFor="entryFee" className="form-label text-white">Entry Fee (Required)</label>
+      <div className="input-group mb-3">
+        <div className="input-group-text bg-secondary text-white border-0 fw-bolder">Entry Fee
+          <span className='text-danger'>*</span>
+        </div>
         <input
           type="number"
-          className="form-control"
+          className="form-control bg-dark border-0 text-white fw-bolder"
           id="entryFee"
           name="entryFee"
           value={formValues.entryFee}
@@ -78,19 +80,19 @@ export const ChangeGameForm:  FC = () => {
           required
         />
       </div>
-      <div className="col-12 mb-3 text-center" >
-        <label htmlFor="losePay" className="form-label text-white">Lose Pay (Optional)</label>
+      <div className="input-group" >
+        <span className="input-group-text bg-secondary text-white border-0 fw-bolder">Lose Pay</span>
         <input
           type="number"
-          className="form-control"
+          className="form-control bg-dark border-0 text-white fw-bolder"
           id="losePay"
           name="losePay"
           value={formValues.losePay}
           onChange={handleInputChange}
         />
       </div>
-      <div className='col-4 offset-4'>
-        <button type="submit" className="btn btn-primary text-center w-100">Save</button>
+      <div className='col-6 offset-3 mt-3'>
+        <button type="submit" className="btn btn-primary text-white fw-bolder text-center w-100">Set Room</button>
       </div>
           </div>
         </div>
